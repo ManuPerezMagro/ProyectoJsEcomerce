@@ -1,81 +1,128 @@
+principal()
 
-// login
+function principal() {
+    let productosOriginal = [
+        { id: 101, nombre: "campera anorak red wings", categoria: "camperas", talle: "xl", precio: 59900, rutaImagen: "anorak_red_wings.jpg"},
+        { id: 102, nombre: "buzo en v champions", categoria: "buzos", talle: "l", precio: 19900, rutaImagen: "buzo_en_v_champions.jpg"},
+        { id: 103, nombre: "buzo fresno state", categoria: "buzos", talle: "xl", precio: 22900, rutaImagen: "buzo_fresno_state.jpg"},
+        { id: 104, nombre: "campera de jean fv", categoria: "camperas", talle: "l", precio: 35900, rutaImagen: "campera_jean_fv.jpg"},
+        { id: 105, nombre: "campera nike reversible", categoria: "camperas", talle: "xl", precio: 29900, rutaImagen: "campera_nike_reversible.jpg"},
+        { id: 106, nombre: "campera reebook tricolor", categoria: "camperas", talle: "l", precio: 26900, rutaImagen: "campera_reebook_tricolor.jpg"},
+        { id: 107, nombre: "campera swingster", categoria: "camperas", talle: "xl", precio: 46900, rutaImagen: "campera_swingster.jpg"},
+        { id: 108, nombre: "campera syracuse", categoria: "camperas", talle: "xl", precio: 37900, rutaImagen: "campera_syracuse.jpg"},
+        { id: 109, nombre: "casaca broncos", categoria: "remeras", talle: "xl", precio: 8900, rutaImagen: "casaca_broncos.jpeg"},
+        { id: 110, nombre: "gafas new york", categoria: "accesorios", talle: "", precio: 2690, rutaImagen: "gafas_new_york.jpeg"},
+        { id: 111, nombre: "gorra rivera maya", categoria: "accesorios", talle: "", precio: 3290, rutaImagen: "gorra_rivera_maya.jpg"},
+        { id: 112, nombre: "gorra vintage club", categoria: "accesorios", talle: "", precio: 2990, rutaImagen: "gorra_vintageclub.jpg"},
+        { id: 113, nombre: "pantalon adidas fucsia", categoria: "pantalones", talle: "xl", precio: 12900, rutaImagen: "pantalon_adidas_fucsia.jpg"},
+        { id: 114, nombre: "pantalon adidas blue", categoria: "pantalones", talle: "l", precio: 15900, rutaImagen: "pantalon_blue_adidas.jpg"},
+        { id: 115, nombre: "pantalon jean levis", categoria: "pantalones", talle: "l", precio: 21900, rutaImagen: "pantalon_jean_levis.jpg"},
+        { id: 116, nombre: "pantalon jean pierre balmain", categoria: "pantalones", talle: "xl", precio: 23900, rutaImagen: "pantalon_jean_pierre_balmain.jpg"},
+        { id: 117, nombre: "pantalon tactico cargo", categoria: "pantalones", talle: "l", precio: 18900, rutaImagen: "pantalon_tactico_cargo.jpg"},
+        { id: 118, nombre: "remera browns nfl", categoria: "remeras", talle: "xl", precio: 7900, rutaImagen: "remera_browns_nfl.jpeg"},
+        { id: 119, nombre: "remera national champions", categoria: "remeras", talle: "l", precio: 6900, rutaImagen: "remera_national_champions.jpeg"},
+        { id: 120, nombre: "remera steelers", categoria: "remeras", talle: "xl", precio: 9900, rutaImagen: "remera_steelers.jpg"},
+        { id: 121, nombre: "riñonera marlboro", categoria: "accesorios", talle: "", precio: 12900, rutaImagen: "rinonera_marlboro.jpg"}
+    ]
 
-let account = "Manolete97"
-let password = 1234
+    let inputBuscador = document.getElementById("buscador")
+    let botonBuscar = document.getElementById("botonBuscador")
+    // inputBuscador.addEventListener("input", () => filtrar(productosOriginal, inputBuscador, "nombre"))
+    botonBuscar.addEventListener("click", () => filtrar(productosOriginal, inputBuscador, "nombre"))
 
-let login = () =>{
-    let ingresar = false
-    for(let i = 3; i > 0; i--){
-        let cuentaIngresada = prompt(`Ingrese su nombre de usuario`)
-        let passIngresada = +(prompt(`Ingrese su contraseña. ${i} intentos restantes`))
-        if(cuentaIngresada === account && passIngresada === password){
-            alert(`Login exitoso ¡Bienvenido ${account}!`)
-            ingresar = true
-            break
-        } else {
-            alert(`usuario y/o contraseña incorrectos`)
-        }
+    let filtrosCategoria = document.getElementsByClassName("filtroCategoria")
+    for (const filtroCategoria of filtrosCategoria) {
+        filtroCategoria.addEventListener("click", () => filtrar(productosOriginal, filtroCategoria, "categoria"))
     }
-    return ingresar
+
+    let botonComprar = document.getElementById("botonComprar")
+    botonComprar.addEventListener("click", finalizarCompra)
+
+    renderizarCarrito()
+    renderizarTarjetas(productosOriginal)
 }
 
-const carrito = []
-
-const productos = [
-    { id: 2234, nombre: "polera susan velvet azul acero", categoria: "remeras", talle: "m", precio: 13990 },
-    { id: 4523, nombre: "remeron killer gothic blanco", categoria: "remeras", talle: "l", precio: 8590 },
-    { id: 1881, nombre: "parka moira", categoria: "abrigos", talle: "xl", precio: 19990 },
-    { id: 2900, nombre: "saco primavera", categoria: "abrigos", talle: "m", precio: 18990 },
-    { id: 1601, nombre: "pantalon sastrero azul marino", categoria: "pantalones", talle: "l", precio: 9990 },
-    { id: 1114, nombre: "jean azul corte clasico", categoria: "pantalones", talle: "xl", precio: 13290 },
-    { id: 2577, nombre: "piluso dd", categoria: "accesorios", talle: "m", precio: 2690 }
-]
-console.log(productos)
-
-let opcion
-do {
-    opcion = +(prompt(`¡Bienvenido a nuestra Tienda Vintage!\n¿En que podemos ayudarte?\n1- Listar Stock\n2- Filtrar Ropa\n3- Comprar\n4- Ver carrito\n0- Salir.`))
-    if (opcion === 1) {
-        alert(listar(productos))
-    } else if (opcion === 2) {
-        let buscarProducto = prompt("¿Que producto o categoria estas buscando?")
-        let productosFiltrados = productos.filter(producto => producto.nombre.includes(buscarProducto.toLowerCase()) || producto.categoria.includes(buscarProducto.toLowerCase()))
-        alert(listar(productosFiltrados)) 
-    } else if (opcion === 3) {
-        let idIngresado = +(prompt(`Ingrese el ID del producto deseado:\n` + listar(productos)))
-        detallesDelProducto(idIngresado)
-        let agregar = confirm("¿quieres agregar este producto al carrito?")
-        if (agregar) {
-            agregarAlCarrito(carrito, idIngresado)
-        }
-    } else if (opcion === 4) {
-        let totalCarrito = carrito.reduce((acum, producto) => acum + producto.precio, 0)
-        alert(`el total de su compra es de: $${totalCarrito}`)
-        alert("¡Muchas gracias por su compra!")
-        break
-    }
-} while (opcion != 0);
-
-// map
-function listar(productos) {
-    let listaProductos = productos.map(producto => `ID: ${producto.id} - Nombre: ${producto.nombre}`).join("\n")
-    return listaProductos
-}
-// find
-function detallesDelProducto(idIngresado) {
-    let productoBuscado = productos.find(producto => producto.id === idIngresado)
-    alert(`Nombre: ${productoBuscado.nombre}\nCategoria: ${productoBuscado.categoria}\nTalle: ${productoBuscado.talle}\nPrecio: $${productoBuscado.precio}`)
-}
-// push a carrito
-function agregarAlCarrito(carrito, idIngresado) {
-    let productoBuscado = productos.find(producto => producto.id === idIngresado)
-    let productoEnCarrito = carrito.find(producto => producto.id === idIngresado)
-    if (productoEnCarrito){
-        alert("Este producto ya esta en el carrito.")
+function finalizarCompra() {
+    let carrito = recuperarCarrito()
+    if (carrito.length > 0) {
+        localStorage.removeItem("carrito")
+        renderizarCarrito()
+        lanzarAlerta("Compra finalizada", "¡Muchas Gracias!", "success", null, "center", null, true)
     } else {
-    carrito.push(productoBuscado)
-    alert("agregado con exito")
+        alert("El carrito de compras esta vacio.")
     }
-    console.log(carrito)
 }
+
+function filtrar(productos, input, propiedad) {
+    let productosFiltrados = productos.filter(producto => producto[propiedad].includes(input.value))
+    renderizarTarjetas(productosFiltrados)
+}
+
+function renderizarTarjetas(productos) {
+    let contenedor = document.getElementById("productos")
+    contenedor.innerHTML = ""
+    productos.forEach(({nombre, precio, id, rutaImagen}) => {
+        let tarjetaProducto = document.createElement("div")
+        tarjetaProducto.classList.add("tarjetaProducto")
+        tarjetaProducto.innerHTML = `
+        <h3>${nombre}</h3>
+        <div>
+            <img class=image src="./img/${rutaImagen}">
+        </div>
+        <p>$${precio}</p>
+        <button id=${id}>Agregar al Carrito</button>
+        `
+        contenedor.appendChild(tarjetaProducto)
+        let botonAgregar = document.getElementById(id)
+        botonAgregar.addEventListener("click", (e) => agregarAlCarrito(productos, e))
+    })
+}
+
+function agregarAlCarrito(productos, e) {
+    let carrito = recuperarCarrito()
+    let productoBuscado = productos.find(producto => producto.id === +(e.target.id))
+    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
+    if (productoEnCarrito) {
+        lanzarAlerta(`${productoBuscado.nombre} ya se encuentra en el carrito`, null, "error", 1500, "top-end", "25em", true)
+    } else {
+        carrito.push({
+            id: productoBuscado.id,
+            nombre: productoBuscado.nombre,
+            precio: productoBuscado.precio
+        })
+        lanzarAlerta("Producto Agregado", null, "success", 1000, "top-end", "20em", false)
+    }
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+    renderizarCarrito()
+}
+
+function recuperarCarrito() {
+    return localStorage.getItem("carrito") ? JSON.parse(localStorage.getItem("carrito")) : []
+}
+
+function renderizarCarrito(){
+    let contenedor = document.getElementById("carrito")
+    contenedor.innerHTML = ""
+    let carrito = recuperarCarrito()
+    carrito.forEach(producto => {
+        let tarjetaProducto = document.createElement("div")
+        tarjetaProducto.innerHTML = `
+        <p>${producto.nombre}</p>
+        <p>$${producto.precio}</p>
+        `
+        contenedor.appendChild(tarjetaProducto)
+    })
+}
+
+function lanzarAlerta(title, text, icon, timer, position, width, showConfirmButton){
+    Swal.fire({
+        title,
+        text,
+        icon,
+        timer,
+        position,
+        width,
+        showConfirmButton, 
+    })
+}
+
