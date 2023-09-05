@@ -43,6 +43,11 @@ footer {
     overflow-y: scroll;
 }
 
+#carrito div{
+    display: flex;
+    justify-content: space-between;
+}
+
 section {
     display: flex;
     justify-content: center;
