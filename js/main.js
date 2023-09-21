@@ -25,7 +25,7 @@ function finalizarCompra() {
         renderizarCarrito()
         lanzarAlerta("Compra finalizada", "¡Muchas Gracias!", "success", null, "center", null, true)
     } else {
-        alert("El carrito de compras esta vacio.")
+        lanzarAlerta("El Carrito esta vacio.", null, "warning", 1000, "center", "20em", false)
     }
 }
 
