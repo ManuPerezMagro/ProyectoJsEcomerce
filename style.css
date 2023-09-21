@@ -43,9 +43,15 @@ footer {
     overflow-y: scroll;
 }
 
-#carrito div{
+#carrito div div {
     display: flex;
     justify-content: space-between;
+}
+
+#carrito div div span {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
 section {
@@ -53,4 +59,16 @@ section {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.botonQuitar {
+    border-radius: 5px;
+    height: 30px;
+    border: 2px outset grey;
+}
+
+.totalCarrito {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
